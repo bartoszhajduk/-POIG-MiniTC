@@ -1,0 +1,51 @@
+﻿<Window x:Class="MiniTC.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"   
+        xmlns:local="clr-namespace:MiniTC"
+        xmlns:ModelView="clr-namespace:MiniTC.ModelView"
+        mc:Ignorable="d"
+        Title="MiniTC" Height="500" Width="600">
+    <Window.Resources>
+        <ModelView:Program x:Key="program"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource program}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height=" 50"/>
+        </Grid.RowDefinitions>
+        <local:PanelTC Drive="{Binding Path=InputDrive, Mode=TwoWay}" Path="{Binding Path=InputName, Mode=TwoWay}" SelectedList="{Binding Path=InputFiles, Mode=TwoWay}" ListOfComboBox="{Binding Path=Drives,Mode=TwoWay}" Grid.Column="0" Margin="5">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="ComboBoxSelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding ChangeInputDrive}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="ListBoxClicked">
+                    <i:InvokeCommandAction Command="{Binding ChangeInputPath}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="ComboBoxClicked">
+                    <i:InvokeCommandAction Command="{Binding ComboBoxClick}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </local:PanelTC>
+        <local:PanelTC Drive="{Binding Path=OutputDrive, Mode=TwoWay}" Path="{Binding Path=OutputName, Mode=TwoWay}" SelectedList="{Binding Path=OutputFiles, Mode=TwoWay}" ListOfComboBox="{Binding Path=Drives,Mode=TwoWay}" Grid.Column="1" Margin="5">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="ComboBoxSelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding ChangeOutputDrive}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="ListBoxClicked">
+                    <i:InvokeCommandAction Command="{Binding ChangeOutputPath}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="ComboBoxClicked">
+                    <i:InvokeCommandAction Command="{Binding ComboBoxClick}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </local:PanelTC>
+        <Button Content="COPY" Width="50" Height="25" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Command="{Binding Copy}"/>
+    </Grid>
+</Window>
